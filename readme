@@ -1,3 +1,4 @@
+# Information
 weewx-wh23xx
 Copyright 2016 Matthew Wall
 Fixes: UserBogD, EdwinGH
@@ -6,7 +7,7 @@ License: GPLv3
 This is a weewx driver for Fine Offset WH23xx hardware.  These stations are
 commonly available as Tycon TP2700, Froggit WH4000, Renkforce WH2315 weather stations.
 
-Installation
+# Installation
 
 0) install weewx, select 'Simulator' driver (as placeholder)
 
@@ -42,12 +43,14 @@ I had to make some updates to the config file myself, for example remove the por
     # The driver to use:
     driver = user.wh23xx
 
-4) start weewx
+# Startup
+
+1) systemd service file
 
 I replaced the LSB init.d file with a proper systemd service file in /etc/systemd/system:
 # systemd configuration for weewx
 # created by EZ to replace /etc/init.d/weewx (removed this file)
-
+```
 [Unit]
 Description=weewx weather system
 #Requires=mysqld.service
@@ -81,10 +84,11 @@ RestartSec=60
 
 [Install]
 WantedBy=multi-user.target
-
+```
 Then added by:
 sudo systemctl enable --now weewx.service
-
-And activated by:
 sudo systemctl daemon-reload
+
+2) Activating weewx
+
 sudo systemctl start weewx
