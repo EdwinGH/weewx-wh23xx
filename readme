@@ -44,4 +44,47 @@ I had to make some updates to the config file myself, for example remove the por
 
 4) start weewx
 
-sudo /etc/init.d/weewx start
+I replaced the LSB init.d file with a proper systemd service file in /etc/systemd/system:
+# systemd configuration for weewx
+# created by EZ to replace /etc/init.d/weewx (removed this file)
+
+[Unit]
+Description=weewx weather system
+#Requires=mysqld.service
+After=time-sync.target syslog.target network.target
+
+RequiresMountsFor=/home
+# The following two lines are not in the current distribution version, but should be uncommented and used if you
+# have changed the [Service] section to automatically restart the weewx service if it crashes. As noted below,
+# this can be particularly useful if weewx has an IP connection to the weather station it is monitoring, since
+# transient WiFi network problems are quite common, and may cause weewx to crash.
+# StartLimitIntervalSec=100
+# StartLimitBurst=5
+
+[Service]
+# Locations taken from /etc/defaults/weewx
+ExecStart=/usr/bin/weewxd --daemon --pidfile=/run/weewx.pid /etc/weewx/weewx.conf
+ExecReload=/bin/kill -HUP $MAINPID
+Type=simple
+PIDFile=/run/weewx.pid
+
+# The following two lines are not in the current distribution version, but may be uncommented and used if you
+# want the weewx service to automatically restart if it crashes. This can be particularly useful if weewx
+# has an IP connection to the weather station it is monitoring, since transient network problems are quite
+# common, and may cause the daemon to crash.
+#Restart=on-failure
+#RestartSec=10
+Restart=always
+RestartSec=60
+#StartLimitInterval=400
+#StartLimitBurst=3
+
+[Install]
+WantedBy=multi-user.target
+
+Then added by:
+sudo systemctl enable --now weewx.service
+
+And activated by:
+sudo systemctl daemon-reload
+sudo systemctl start weewx
