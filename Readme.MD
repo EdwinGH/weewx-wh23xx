@@ -15,34 +15,35 @@ See http://weewx.com/docs/usersguide.htm#installing
 
 Note that I installed on Raspberry Pi model 3+ (Buster) as follows:
 0a) Add the weewx apt repository key
-wget -qO - http://weewx.com/keys.html | sudo apt-key add -
+`wget -qO - http://weewx.com/keys.html | sudo apt-key add -`
 0b) Add the weewx repository
-sudo wget -qO - https://weewx.com/apt/weewx-python3.list | sudo tee /etc/apt/sources.list.d/weewx.list
+`sudo wget -qO - https://weewx.com/apt/weewx-python3.list | sudo tee /etc/apt/sources.list.d/weewx.list`
 0c) Install weewx
-sudo apt install weewx
+`sudo apt install weewx`
 0d) I also had to default to Python3 and install pymysql as I store the data on a remote MySQL server  
-sudo apt-get install python3-pymysql
+`sudo apt-get install python3-pymysql`
 
 1) download the driver
 
-wget -O weewx-wh23xx.zip https://github.com/EdwinGH/weewx-wh23xx/archive/master.zip
+`wget -O weewx-wh23xx.zip https://github.com/EdwinGH/weewx-wh23xx/archive/master.zip`
 
 2) install the driver
 
-sudo wee_extension --install weewx-wh23xx.zip
+`sudo wee_extension --install weewx-wh23xx.zip`
 
 3) configure the driver (now select wh23xx, it should appear in the list of drivers)
 
-sudo wee_config --reconfigure
+`sudo wee_config --reconfigure`
 
 I had to make some updates to the config file myself, for example remove the port. My wh23xx section of the weewx.conf looks as follows:
+```
 [WH23xx]
     # This section is for Fine Offset WH23xx stations    
     # The model name such as Tycon, or TP2700
     model = Renkforce WH2315
     # The driver to use:
     driver = user.wh23xx
-
+```
 # Startup
 
 1) systemd service file
@@ -86,9 +87,9 @@ RestartSec=60
 WantedBy=multi-user.target
 ```
 Then added by:
-sudo systemctl enable --now weewx.service
-sudo systemctl daemon-reload
+`sudo systemctl enable --now weewx.service`
+`sudo systemctl daemon-reload`
 
 2) Activating weewx
 
-sudo systemctl start weewx
+`sudo systemctl start weewx`
