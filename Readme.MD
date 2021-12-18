@@ -48,9 +48,9 @@ I had to make some updates to the config file myself, for example remove the por
 1) systemd service file
 
 I replaced the LSB init.d file with a proper systemd service file in /etc/systemd/system:
+```
 # systemd configuration for weewx
 # created by EZ to replace /etc/init.d/weewx (removed this file)
-```
 [Unit]
 Description=weewx weather system
 #Requires=mysqld.service
