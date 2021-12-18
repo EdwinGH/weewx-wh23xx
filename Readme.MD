@@ -1,37 +1,39 @@
 # Information
 weewx-wh23xx
+
 Copyright 2016 Matthew Wall
+
 Fixes: UserBogD, EdwinGH
+
 License: GPLv3
 
-This is a weewx driver for Fine Offset WH23xx hardware.  These stations are
-commonly available as Tycon TP2700, Froggit WH4000, Renkforce WH2315 weather stations.
+This is a weewx driver for Fine Offset WH23xx hardware.  These stations are commonly available as Tycon TP2700, Froggit WH4000, Renkforce WH2315 (Conrad) weather stations.
 
 # Installation
 
-0) install weewx, select 'Simulator' driver (as placeholder)
+1. install weewx, select 'Simulator' driver (as placeholder)
 
 See http://weewx.com/docs/usersguide.htm#installing
 
 Note that I installed on Raspberry Pi model 3+ (Buster) as follows:
-0a) Add the weewx apt repository key
+* Add the weewx apt repository key
 `wget -qO - http://weewx.com/keys.html | sudo apt-key add -`
-0b) Add the weewx repository
+* Add the weewx repository
 `sudo wget -qO - https://weewx.com/apt/weewx-python3.list | sudo tee /etc/apt/sources.list.d/weewx.list`
-0c) Install weewx
+* Install weewx
 `sudo apt install weewx`
-0d) I also had to default to Python3 and install pymysql as I store the data on a remote MySQL server  
+* I also had to default to Python3 and install pymysql as I store the data on a remote MySQL server  
 `sudo apt-get install python3-pymysql`
 
-1) download the driver
+2. download the driver
 
 `wget -O weewx-wh23xx.zip https://github.com/EdwinGH/weewx-wh23xx/archive/master.zip`
 
-2) install the driver
+3. install the driver
 
 `sudo wee_extension --install weewx-wh23xx.zip`
 
-3) configure the driver (now select wh23xx, it should appear in the list of drivers)
+4. configure the driver (now select wh23xx, it should appear in the list of drivers)
 
 `sudo wee_config --reconfigure`
 
@@ -46,7 +48,7 @@ I had to make some updates to the config file myself, for example remove the por
 ```
 # Startup
 
-1) systemd service file
+1. systemd service file
 
 I replaced the LSB init.d file with a proper systemd service file in /etc/systemd/system:
 ```
@@ -90,6 +92,6 @@ Then added by:
 `sudo systemctl enable --now weewx.service`
 `sudo systemctl daemon-reload`
 
-2) Activating weewx
+2. Activating weewx
 
 `sudo systemctl start weewx`
