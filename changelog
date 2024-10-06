@@ -1,3 +1,9 @@
+0.15EZ 2024-10-06
+* Rebased on v0.15 from Matthew
+* Added inline comments on USB identification of my Renkforce W2315
+* Added some debugging comments
+* Fixed USB info (bus.dirname and device.filename do not work (anymore?)
+
 0.xx 11jun2020
 * Fixed for Python3 support (changed all print statements with braces, Exception statements with 'as' instead of ',') [EdwinGH]
 
