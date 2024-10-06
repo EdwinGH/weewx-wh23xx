@@ -33,7 +33,21 @@ Note that I installed on Raspberry Pi model 3+ (Buster) as follows:
 
 `sudo wee_extension --install weewx-wh23xx.zip`
 
-4. configure the driver (now select wh23xx, it should appear in the list of drivers)
+4. give access to non-root user to usb interface
+
+An added line to the weewx.rules file changes the access mode to the right USB Vendor / Product combination
+```
+SUBSYSTEM=="usb", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="8468", MODE="0666"
+```
+
+This line was added to the weewx.rules file on this project; copy the whole file to the udev rules location
+`sudo cp weewx.rules /etc/udev/rules.d`
+
+Make sure to either reboot or run
+`sudo udevadm control --reload-rules`
+and replug the device to make it work.
+
+5. configure the driver (now select wh23xx, it should appear in the list of drivers)
 
 `sudo wee_config --reconfigure`
 
