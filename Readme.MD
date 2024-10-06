@@ -86,7 +86,6 @@ RequiresMountsFor=/home
 ExecStart=/usr/bin/weewxd --daemon --pidfile=/run/weewx.pid /etc/weewx/weewx.conf
 ExecReload=/bin/kill -HUP $MAINPID
 Type=simple
-PIDFile=/run/weewx.pid
 
 # The following two lines are not in the current distribution version, but may be uncommented and used if you
 # want the weewx service to automatically restart if it crashes. This can be particularly useful if weewx
